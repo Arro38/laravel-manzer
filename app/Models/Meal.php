@@ -9,6 +9,7 @@ class Meal extends Model
 {
     use HasFactory;
     // Add the fillable property to allow mass assignment on the model
+
     protected $fillable = [
         'name',
         'description',
