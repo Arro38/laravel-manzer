@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SecurityController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\SectorController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -14,7 +15,11 @@ Route::post('/register', [SecurityController::class, 'register']);
 Route::post('/login', [SecurityController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [SecurityController::class, 'logout']);
+    Route::post('/users/me', [SecurityController::class, 'profile']);
+
 });
+//Sector routes
+Route::get('/sectors', [SectorController::class, 'allSectors']);
 
 //Meal routes
 

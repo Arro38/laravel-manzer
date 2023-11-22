@@ -16,12 +16,18 @@ class SecurityController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
+            'tel' => 'required|string|min:10',
+            'address' => 'required|string|min:5',
+            'sector_id' => 'required|integer|exists:sectors,id',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'tel' => $request->tel,
+            'address' => $request->address,
+            'sector_id' => $request->sector_id,
         ]);
 
         // Générer un token pour l'utilisateur
@@ -48,6 +54,12 @@ class SecurityController extends Controller
         return response(['message' => 'Invalid credentials'], 401);
 
         // return response()->json(['message' => 'Invalid credentials'], 401);
+    }
+
+    public function profile(Request $request)
+    {
+        $user = $request->user();
+        return $user->load('sector:id,name');
     }
 
     public function logout(Request $request)

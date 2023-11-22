@@ -19,10 +19,18 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'tel',
+        'address',
         'email',
         'password',
-        'meals'
+        'meals',
+        'sector_id'
     ];
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

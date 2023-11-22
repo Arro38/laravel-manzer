@@ -10,17 +10,20 @@ class Meal extends Model
     use HasFactory;
     // Add the fillable property to allow mass assignment on the model
 
+    public mixed $user_id;
     protected $fillable = [
         'name',
         'description',
         'price',
         'image',
-        'user_id'
+        'user_id',
+        'enabled'
     ];
 
-    // Add the relationship between the meal and the user
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select(['id', 'sector_id']);
     }
+
+
 }
