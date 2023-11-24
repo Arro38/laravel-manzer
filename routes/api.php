@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Resetting password
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-Route::get('/reset-password',[ForgotPasswordController::class, 'resetPassword']);
+Route::post('/reset-password',[ForgotPasswordController::class, 'resetPassword']);
 
 
 //Sector routes
