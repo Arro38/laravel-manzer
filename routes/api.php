@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\SecurityController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\SectorController;
@@ -16,8 +17,15 @@ Route::post('/login', [SecurityController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [SecurityController::class, 'logout']);
     Route::post('/users/me', [SecurityController::class, 'profile']);
-
+    Route::put('/users/me', [SecurityController::class, 'update']);
 });
+
+
+//Resetting password
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::get('/reset-password',[ForgotPasswordController::class, 'resetPassword']);
+
+
 //Sector routes
 Route::get('/sectors', [SectorController::class, 'allSectors']);
 
@@ -32,4 +40,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/meals/{meal}', [MealController::class, 'destroy']);
 
 });
+
 

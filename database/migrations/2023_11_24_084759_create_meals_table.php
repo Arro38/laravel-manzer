@@ -8,25 +8,30 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('meals', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->float('price', 8, 2);
+            $table->double('price', 8, 2);
             $table->string('image');
-            $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('user_id')->index('meals_user_id_foreign');
             $table->softDeletes();
             $table->timestamps();
+            $table->boolean('enabled')->default(true);
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('meals');
     }

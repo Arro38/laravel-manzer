@@ -8,23 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('meals', function (Blueprint $table) {
-            $table->boolean('enabled')->default(1);
-            //
+            $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('meals', function (Blueprint $table) {
-            $table->dropColumn('enabled');
-            //
+            $table->dropForeign('meals_user_id_foreign');
         });
     }
 };

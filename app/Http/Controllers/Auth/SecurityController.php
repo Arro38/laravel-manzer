@@ -36,6 +36,55 @@ class SecurityController extends Controller
         return response(['token' => $token], 201);
     }
 
+    public function update(Request $request)
+    {
+        $user = $request->user();
+        if($request->has('name')){
+            $request->validate([
+                'name' => 'required|string',
+            ]);
+            $user->name = $request->name;
+        }
+        if($request->has('email')){
+            $request->validate([
+                'email' => 'required|email|unique:users',
+            ]);
+            $user->email = $request->email;
+        }
+
+        if($request->has('password')){
+            $request->validate([
+                'password' => 'required|string|min:8',
+            ]);
+            $user->password = Hash::make($request->password);
+        }
+
+        if($request->has('tel')){
+            $request->validate([
+                'tel' => 'required|string|min:10',
+            ]);
+            $user->tel = $request->tel;
+        }
+
+        if($request->has('address')){
+            $request->validate([
+                'address' => 'required|string|min:5',
+            ]);
+            $user->address = $request->address;
+        }
+
+        if($request->has('sector_id')){
+            $request->validate([
+                'sector_id' => 'required|integer|exists:sectors,id',
+            ]);
+            $user->sector_id = $request->sector_id;
+        }
+
+        $user->save();
+        return response(['message' => 'User updated successfully'], 200);
+    }
+
+
     public function login(Request $request)
     {
         $request->validate([

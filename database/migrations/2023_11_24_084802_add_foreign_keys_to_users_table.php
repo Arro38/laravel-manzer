@@ -8,22 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('sector_id')->constrained();
-            //
+            $table->foreign(['sector_id'])->references(['id'])->on('sectors')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['sector_id']);
+            $table->dropForeign('users_sector_id_foreign');
         });
     }
 };
