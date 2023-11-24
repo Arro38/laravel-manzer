@@ -18,10 +18,7 @@ class ForgotPasswordController extends Controller
 
 
         $status = Password::sendResetLink(
-            $request->only('email'),function (Message $message) {
-                $message->subject('Reset your password');
-                $message->from('formation.etienne.re@gmail.com', 'Manzer.re');
-            }
+            $request->only('email')
         );
 
         return response(['status' => $status , 'sent' => Password::RESET_LINK_SENT === $status]);
