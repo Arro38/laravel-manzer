@@ -52,13 +52,6 @@ class SecurityController extends Controller
             $user->email = $request->email;
         }
 
-        if($request->has('password')){
-            $request->validate([
-                'password' => 'required|string|min:8',
-            ]);
-            $user->password = Hash::make($request->password);
-        }
-
         if($request->has('tel')){
             $request->validate([
                 'tel' => 'required|string|min:10',
@@ -81,7 +74,25 @@ class SecurityController extends Controller
         }
 
         $user->save();
-        return response(['message' => 'User updated successfully'], 200);
+        return $user;
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = $request->user();
+        $request->validate([
+            'password' => 'required|string|min:8',
+            'new_password' => 'required|string|min:8',
+            'new_password_confirmation' => 'required|string|min:8|same:new_password',
+        ]);
+
+        if (!Hash::check($request->password, $user->password)) {
+            return response(['message' => 'Invalid password'], 401);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return $user;
     }
 
 
@@ -107,8 +118,7 @@ class SecurityController extends Controller
 
     public function profile(Request $request)
     {
-        $user = $request->user();
-        return $user->load('sector:id,name');
+        return $request->user();
     }
 
     public function logout(Request $request)
