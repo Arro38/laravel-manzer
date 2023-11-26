@@ -39,46 +39,42 @@ class SecurityController extends Controller
     public function update(Request $request)
     {
         $user = $request->user();
-        if($request->has('name')){
+        if($request->has('name')  && $request->name != $user->name){
             $request->validate([
                 'name' => 'required|string',
             ]);
-            if($request->name != $user->name)
-            $user->name = $request->name;
-        }
-        if($request->has('email')){
+
+                $user->name = $request->name;
+                 }
+        if($request->has('email' && $request->email != $user->email)){
             $request->validate([
                 'email' => 'required|email|unique:users',
             ]);
-            if($request->email != $user->email)
-            $user->email = $request->email;
+                $user->email = $request->email;
         }
 
-        if($request->has('tel')){
+        if($request->has('tel') && $request->tel != $user->tel){
             $request->validate([
                 'tel' => 'required|string|min:10',
             ]);
-            if($request->tel != $user->tel)
             $user->tel = $request->tel;
-        }
+                    }
 
-        if($request->has('address')){
+        if($request->has('address')  && $request->address != $user->address){
             $request->validate([
                 'address' => 'required|string|min:5',
             ]);
-            if($request->address != $user->address)
-            $user->address = $request->address;
+           $user->address = $request->address;
         }
 
-        if($request->has('sector_id')){
+        if($request->has('sector_id') && $request->sector_id != $user->sector_id){
             $request->validate([
                 'sector_id' => 'required|integer|exists:sectors,id',
             ]);
-            if($request->sector_id != $user->sector_id)
-            $user->sector_id = $request->sector_id;
-        }
+          $user->sector_id = $request->sector_id;
+                  }
 
-        $user->save();
+        $user->update();
         return $user;
     }
 
