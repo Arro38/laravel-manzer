@@ -43,12 +43,14 @@ class SecurityController extends Controller
             $request->validate([
                 'name' => 'required|string',
             ]);
+            if($request->name != $user->name)
             $user->name = $request->name;
         }
         if($request->has('email')){
             $request->validate([
                 'email' => 'required|email|unique:users',
             ]);
+            if($request->email != $user->email)
             $user->email = $request->email;
         }
 
@@ -56,6 +58,7 @@ class SecurityController extends Controller
             $request->validate([
                 'tel' => 'required|string|min:10',
             ]);
+            if($request->tel != $user->tel)
             $user->tel = $request->tel;
         }
 
@@ -63,6 +66,7 @@ class SecurityController extends Controller
             $request->validate([
                 'address' => 'required|string|min:5',
             ]);
+            if($request->address != $user->address)
             $user->address = $request->address;
         }
 
@@ -70,6 +74,7 @@ class SecurityController extends Controller
             $request->validate([
                 'sector_id' => 'required|integer|exists:sectors,id',
             ]);
+            if($request->sector_id != $user->sector_id)
             $user->sector_id = $request->sector_id;
         }
 
