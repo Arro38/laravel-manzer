@@ -40,8 +40,9 @@ class MealController extends Controller
     // Modifier un repas
     public function update(Meal $meal,Request $request )
     {
+        $userId = $meal->user->id;
         // Vérifiez si l'utilisateur connecté est le propriétaire du repas
-        if ( $request->user()->id !== $meal->user_id) {
+        if ( $request->user()->id !== $userId) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -65,8 +66,9 @@ class MealController extends Controller
     // Supprimer un repas
     public function destroy(Request $request,Meal $meal)
     {
+        $userId = $meal->user->id;
         // Vérifiez si l'utilisateur connecté est le propriétaire du repas
-        if ($request->user()->id !== $meal->user_id) {
+        if ($request->user()->id !== $userId) {
             return response(['message' => 'Unauthorized'], 403);
         }
 
@@ -80,11 +82,9 @@ class MealController extends Controller
         return response($meal);
     }
 
-    public function myMeals()
+    public function myMeals(Request $request)
     {
-//        $meals = Auth::user()->meals;
-//        return response($meals);
-        $meals = Meal::all();
+        $meals = $request->user()->meals;
         return response($meals);
     }
 }
