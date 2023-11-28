@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Meal extends Model
 {
     use HasFactory;
+
     // Add the fillable property to allow mass assignment on the model
 
     protected $user_id;
@@ -17,6 +18,7 @@ class Meal extends Model
         parent::__construct($attributes);
         $this->user_id = $attributes['user_id'] ?? null;
     }
+
     protected $fillable = [
         'name',
         'description',
@@ -28,7 +30,7 @@ class Meal extends Model
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class)->select(['id', 'sector_id']);
+        return $this->belongsTo(User::class)->select(['id', 'name', 'tel', 'address', 'sector_id']);
     }
 
 
