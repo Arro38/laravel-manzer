@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Resetting password
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-Route::post('/reset-password',[ForgotPasswordController::class, 'resetPassword']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
 
 //Sector routes
@@ -37,9 +37,8 @@ Route::get('/meals/{meal}', [MealController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/meals', [MealController::class, 'store']);
     Route::get('/my-meals', [MealController::class, 'myMeals']);
-    Route::put('/meals/{meal}', [MealController::class, 'update']);
+    Route::post('/meals/{meal}', [MealController::class, 'update']);
     Route::delete('/meals/{meal}', [MealController::class, 'destroy']);
-
 });
 
 
