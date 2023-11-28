@@ -12,7 +12,7 @@ class MealController extends Controller
     // Afficher tous les repas actifs
     public function index()
     {
-        $meals = Meal::with('user')->where('active', true)->get();
+        $meals = Meal::with('user')->where('enabled', true)->get();
         return response($meals);
     }
 
