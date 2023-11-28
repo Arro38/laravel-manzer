@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
-    // Afficher tous les repas
+    // Afficher tous les repas actifs
     public function index()
     {
-        $meals = Meal::with('user')->get();
+        $meals = Meal::with('user')->where('active', true)->get();
         return response($meals);
     }
 
