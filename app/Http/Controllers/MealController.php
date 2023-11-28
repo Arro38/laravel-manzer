@@ -34,15 +34,15 @@ class MealController extends Controller
             'image' => $request->file('image') ? $request->file('image')->store('images/meals', 'public') : null,
         ]);
 
-        return response( $meal);
+        return response($meal);
     }
 
     // Modifier un repas
-    public function update(Meal $meal,Request $request )
+    public function update(Meal $meal, Request $request)
     {
         $userId = $meal->user->id;
         // Vérifiez si l'utilisateur connecté est le propriétaire du repas
-        if ( $request->user()->id !== $userId) {
+        if ($request->user()->id !== $userId) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -63,8 +63,27 @@ class MealController extends Controller
         return response($meal);
     }
 
+    public function updateStatus(Meal $meal, Request $request)
+    {
+        $userId = $meal->user->id;
+        // Vérifiez si l'utilisateur connecté est le propriétaire du repas
+        if ($request->user()->id !== $userId) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'enabled' => 'required|boolean',
+        ]);
+
+        $meal->update([
+            'enabled' => $request->enabled,
+        ]);
+
+        return response($meal);
+    }
+
     // Supprimer un repas
-    public function destroy(Request $request,Meal $meal)
+    public function destroy(Request $request, Meal $meal)
     {
         $userId = $meal->user->id;
         // Vérifiez si l'utilisateur connecté est le propriétaire du repas
