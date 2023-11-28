@@ -34,7 +34,7 @@ class MealController extends Controller
             'image' => $request->file('image') ? $request->file('image')->store('images/meals', 'public') : null,
         ]);
 
-        return response(['message' => 'Meal created successfully', 'data' => $meal], 201);
+        return response( $meal);
     }
 
     // Modifier un repas
@@ -60,7 +60,7 @@ class MealController extends Controller
             'image' => $request->file('image') ? $request->file('image')->store('images/meals', 'public') : $meal->image,
         ]);
 
-        return response(['message' => 'Meal updated successfully', 'data' => $meal]);
+        return response($meal);
     }
 
     // Supprimer un repas
